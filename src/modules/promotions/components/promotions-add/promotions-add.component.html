@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-md-9">
+        <div class="tbody">
+            <br>
+            <form>
+                <div class="form-group">
+                    <h2 style ="color: red;">Name :</h2><input #name class="form-control">
+                </div>
+                <div class="form-group">
+                    <h2 style="color:aqua">Start date :</h2>
+                    <input type="date" class="form-control" #start_date id="birthday" name="birthday">
+                </div>   
+                <div class="form-group">
+                    <h2 style="color:blue">End date :</h2>
+                    <input type="date" class="form-control" #end_date id="birthday" name="birthday">
+                </div>
+                <div class="form-group">
+                    <h2 style="color:chartreuse">Discount :</h2><input #discount class="form-control">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-dark" style="margin : 5px" routerLink="/promotions/list">Cancel</button>
+                    <button class="btn btn-dark" (click)="addPromotion(name.value,start_date.value,end_date.value,discount.value)">Add promotion</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <h1>promotions</h1>
+        <p><code>1. name </code> : Name of the promotions ,example :heard</p>
+        <p><code>2. start_date </code> : start date of the promotions</p>
+        <p><code>3. end_date </code> : end date of the promotions</p>
+        <p><code>4. Discount </code> : Discount of the promotion</p>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-md-9"> 
+        <div *ngIf="category$ | async ; then display ; else loading" ></div>
+        <ng-template #display>
+            <div class="tbody">
+                <br>
+                <form>
+                    <div class="form-group">
+                        <h2>Name :</h2><input name="category.name" [(ngModel)]="category.name"  class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <h2>Description</h2>
+                        <textarea name="category.description" [(ngModel)]="category.description" class="form-control" #description></textarea>
+                    </div>   
+                    <div class="form-group">
+                        <div *ngIf="category.image"><img style="width: 150px" src="{{url+'/'+category.image.url}}"></div>
+                        <div *ngIf="!category.image"><img style="width: 150px" src="../../../assets/img/avatar.jpg"></div>
+                    </div>
+                    <div class="form-group">
+                        <h2>File</h2>
+                        <file-pond #myPond
+                           (oninit)="pondHandleInit()"
+                            [options]="pondOptions" 
+                            (change)="pondHandleAddFile($event)">
+                        </file-pond>
+                    </div>
+                    <div>
+                        <button class="btn btn-dark" style="margin : 5px" routerLink="/categories/list">Cancel</button>
+                        <button class="btn btn-dark" (click)="upDateCategory()">Update Category</button>
+                    </div>
+                </form>
+            </div>
+    
+        </ng-template>
+        <ng-template #loading>
+            <div class="text-center">
+                <div class="spinner-grow" style="width: 15rem; height: 15rem;text-align: center;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </ng-template>
+        
+    </div>
+    <div class="col-md-3">
+        <h1>Category</h1>
+        <p><code>1. name </code> : Name of the category ,example :heard</p>
+        <p><code>2. description </code> : Description of the category</p>
+        <p><code>3. file </code>: Image file of the category</p>
+
+    </div>
+</div>

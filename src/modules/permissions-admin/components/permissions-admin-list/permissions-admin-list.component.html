@@ -1,0 +1,63 @@
+<sb-card>
+    <div class="card-header">
+        <div class="test">
+            <fa-icon class="mr-1" [icon]='["fas","table"]'></fa-icon><strong>List All Admin</strong>
+            <button class="btn btn-success btn-add"  routerLink="/permission-admin/remove-all" style="float: right">Remove All permissions Admin</button>
+            <button class="btn btn-primary btn-add"  routerLink="/permission-admin/add-all"style="float: right;">Add All permissions Admin</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div *ngIf="listadmin$ | async; then display; else loading"></div>
+        <ng-template #display>
+            <table class="table table-striped">
+                <thead>
+                    <th>ID</th>
+                    <th>Phone</th>
+                    <th>Full Name</th>
+                    <th>Birthday</th>
+                    <th>Avatar</th>
+                    <th>Add permissions</th>
+                    <th>Remove permissions</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let admin of listadmin$ | async">
+                        <td>{{admin.id}}</td>
+                        <td>{{admin.phone}}</td>
+                        <td>{{admin.full_name}}</td>
+                        <td>{{admin.birthday}}</td>
+                        <td>
+                            <div *ngIf="admin.avatar"><img src="{{url+'/'+admin.avatar.url}} " style="width: 40px"></div>
+                            <div *ngIf="!admin.avatar"><img src="../../../assets/img/avatar.jpg"  style="width: 40px"></div>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" style="margin : 5px" routerLink="/permission-admin/add-detail/{{admin.id}}">Add Detail Permissions</button>             
+                        </td>
+                        <td>
+                            <button class="btn btn-success" style="margin : 5px" routerLink="/permission-admin/remove-detail/{{admin.id}}">Remove Detail Permissions</button>             
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                <div class="row" >
+                    <div class="col-sm-0">
+                        <button (click)="previousPage()">Previous</button>
+                    </div>
+                    <div><h3>{{page}}</h3></div>
+                    <div class="col-sm-0 text-right">
+                        <button (click)="nextPage()">Next</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #loading>
+            <div class="text-center">
+                <div class="spinner-grow" style="width: 15rem; height: 15rem;text-align: center;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            
+        </ng-template>
+    </div>
+</sb-card>
+<!-- transform="shrink-40" -->

@@ -1,0 +1,45 @@
+<h1 style="color: yellow">Top Services</h1>
+<sb-card>
+    <div class="card-header">
+        <div class="test">
+            <fa-icon class="mr-1" [icon]='["fas","table"]'></fa-icon><strong>List Top Services</strong>
+        </div>
+    </div>
+    <div class="card-body">
+        <div *ngIf="TopServices$ | async ; then display else loading" ></div>
+        <ng-template #display>
+           <table class="table table-striped ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Avatar</th>
+                        <th>name</th>
+                        <th>Description</th>
+                        <th>Orders count</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let service of TopServices$ | async">
+                        <th>{{service.id}}</th>
+                        <th>
+                            <div *ngIf="service.image"><img src="{{url+'/'+service.image.url}}"  style="width:80px"></div>
+                            <div *ngIf="!service.image"><img src="../../../assets/img/avatar.jpg" style="width:80px"></div>
+                        </th>
+                        <th>{{service.name}}</th>
+                        <th>{{ service.description}}</th>
+                        <th>{{service.orders_count}}</th>
+                        <th>{{service.price}}</th>
+                    </tr>
+                </tbody>
+            </table>
+          </ng-template>
+        <ng-template #loading>
+            <div class="text-center">
+                <div class="spinner-grow" style="width: 15rem; height: 15rem;text-align: center;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div> 
+        </ng-template>
+    </div>
+</sb-card>

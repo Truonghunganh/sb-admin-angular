@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-md-9">
+        <div class="tbody">
+            <br>
+            <form>
+                <div class="form-group">
+                    <h2>Name :</h2><input #name class="form-control">
+                </div>
+                <div class="form-group">
+                    <h2>Description</h2>
+                    <textarea class="form-control" #description></textarea>
+                </div>   
+                <div class="form-group">
+                    <h2>File</h2>
+                    <file-pond #myPond
+                       (oninit)="pondHandleInit()"
+                        [options]="pondOptions" 
+                        (change)="pondHandleAddFile($event)">
+                    </file-pond>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-dark" style="margin : 5px" routerLink="/categories/list">Cancel</button>
+                    <button class="btn btn-dark" (click)="addCategory(name.value,description.value)">Add Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <h1>Category</h1>
+        <p><code>1. name </code> : Name of the category ,example :heard</p>
+        <p><code>2. description </code> : Description of the category</p>
+        <p><code>3. file </code>: Image file of the category</p>
+    </div>
+</div>

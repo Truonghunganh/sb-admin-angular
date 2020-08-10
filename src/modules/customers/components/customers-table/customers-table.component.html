@@ -1,0 +1,72 @@
+<div class="custom-control custom-switch">
+    <input (click)="ChangeStatus()" type="checkbox" class="custom-control-input" id="status" checked>
+    <label class="custom-control-label" for="status"></label>
+</div>
+<sb-card>
+    <div class="card-header">
+
+    </div>
+    <div class="card-body">
+        <div *ngIf="customers$ | async ; then display else loading" ></div>
+        <ng-template #display>
+           <table class="table table-striped ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>phone</th>
+                        <th>Full name</th>
+                        <th>Birthday</th>
+                        <th>Avatar</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let customer of customers$ | async">
+                        <th>{{customer.id}}</th>
+                        <th>{{customer.phone}}</th>
+                        <th>{{customer.full_name}}</th>
+                        <th>{{customer.birthday}}</th>
+                        <th>
+                            <div *ngIf="customer.avatar"><img src="{{url+'/'+customer.avatar.url}}" class="image-avatar-list" style="width:40px"></div>
+                            <div *ngIf="!customer.avatar"><img src="../../../assets/img/avatar.jpg" class="image-avatar-list" style="width:40px"></div>
+                        </th>
+                        <th>
+                            <div *ngIf="customer.status==1">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" disabled class="custom-control-input" id="customSwitch" checked>
+                                    <label class="custom-control-label" for="customSwitch"></label>
+                                </div>                                  
+                            </div>
+                            <div *ngIf="!(customer.status==1)">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" disabled class="custom-control-input" id="customSwitch1">
+                                    <label class="custom-control-label" for="customSwitch1"></label>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                <div class="row" >
+                    <div class="col-sm-0">
+                        <button (click)="previousPage()">Previous</button>
+                    </div>
+                    <div><h3>{{page}}</h3></div>
+                    <div class="col-sm-0 text-right">
+                        <button (click)="nextPage()">Next</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #loading>
+            <div class="text-center">
+                <div class="spinner-grow" style="width: 15rem; height: 15rem;text-align: center;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+           
+        </ng-template>
+    </div>
+</sb-card>

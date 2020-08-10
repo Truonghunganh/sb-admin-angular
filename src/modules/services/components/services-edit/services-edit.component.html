@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-md-9">
+        <div *ngIf="service$ | async ; then display ; else loading"></div>
+        <ng-template #display>
+            <div class="form-group">
+                <label>Name</label>
+                <input  name="service.name" [(ngModel)]="service.name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" name="service.description" [(ngModel)]="service.description"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input class="form-control" name="service.price" [(ngModel)]="service.price">
+            </div>
+            <div class="form-group">
+                <label>Image </label>
+                <div *ngIf="service.image"><img style="width:100px" src="{{url+'/'+service.image.url}}"></div>
+                <div *ngIf="!service.image"><img style="width:100px" src="../../../assets/img/avatar.jpg"></div>
+            </div> 
+            <div class="form-group">
+                <h2>File</h2>
+                <file-pond #myPond
+                   (oninit)="pondHandleInit()"
+                    [options]="pondOptions" 
+                    (change)="pondHandleAddFile($event)">
+                </file-pond>
+            </div>
+            
+            <div>
+                <button class="btn btn-dark" style="margin : 5px" routerLink="/services/list/{{categoryId}}">Cancel</button>
+                <button class="btn btn-dark" (click)="updateService()">Update Service</button>
+            </div>
+        </ng-template>
+        <ng-template #loading>
+            <div class="text-center">
+                <div class="spinner-grow" style="width: 15rem; height: 15rem;text-align: center;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+    <div class="col-md-3">
+        <div>Name : <strong>is name of the service</strong></div>
+        <div>Description : <strong>is description of the service</strong></div>
+        <div>Price : <strong>is price of the service (price >1000 )</strong></div>
+        <div>image : <strong>is image of the service</strong>div>
+    </div>
+</div>

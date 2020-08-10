@@ -1,0 +1,64 @@
+<h1 style="color:blue;">Data Diagrams</h1>
+<div class="row">
+    <div class="col-xl-6">
+        <sb-card>
+            <div class="card-header">
+                <fa-icon class="mr-1" [icon]='["fas", "chart-bar"]'></fa-icon>Pie Chart Subscription Overview
+            </div>
+            <div class="card-body">
+                <div *ngIf="SO$ | async; then display ; else loading"></div>
+                <ng-template #display>
+                    <div class="chart-wrapper">
+                        <canvas baseChart 
+                            [datasets]="lineChartDataSO" 
+                            [labels]="lineChartLabelsSO" 
+                            [options]="lineChartOptions"
+                            [legend]="lineChartLegend" 
+                            [chartType]="lineChartTypeSO" 
+                            [plugins]="lineChartPlugins">
+                        </canvas>
+                    </div>               
+                </ng-template>
+                <ng-template #loading>
+                    <div class="text-center">
+                        <div class="spinner-grow" style="width: 15rem; height: 15rem;text-align: center;" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </ng-template>          
+            </div>
+        </sb-card>
+    </div>
+    <div class="col-xl-6">
+        <sb-card>
+            <div class="card-header">
+                <fa-icon class="mr-1" [icon]='["fas", "chart-bar"]'></fa-icon>Bar Chart Orders By Month
+            </div>
+            <div class="card-body">
+                <div *ngIf="OB$ | async; then displayOB ; else loadingOB"></div>
+                <ng-template #displayOB>
+                    <div class="chart-wrapper">
+                        <canvas baseChart 
+                            [datasets]="lineChartDataOB" 
+                            [labels]="lineChartLabelsOB" 
+                            [options]="lineChartOptions"
+                            [colors]="lineChartColors" 
+                            [legend]="lineChartLegend" 
+                            [chartType]="lineChartTypeOB" 
+                            [plugins]="lineChartPlugins">
+                        </canvas>
+                    </div>               
+                </ng-template>
+                <ng-template #loadingOB>
+                    <div class="text-center">
+                        <div class="spinner-grow" style="width: 15rem; height: 15rem;text-align: center;" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </ng-template>
+            
+            </div>
+        </sb-card>
+    </div>
+</div>
+<br>

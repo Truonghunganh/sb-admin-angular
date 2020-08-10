@@ -1,0 +1,228 @@
+<sb-card>
+    <div class="card-header">
+        <div class="test">
+            <fa-icon class="mr-1" [icon]='["fas","table"]'></fa-icon><strong>Order detail</strong>
+        </div>
+    </div>
+    <div class="card-body">
+        <div *ngIf="order$ | async ; then display ; else loading"></div>
+        <ng-template #display>
+            
+            <div class="col">
+                <div class="card-header">
+                    <div class="text"><h3 style="color : green">Order</h3></div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped" >
+                        <tbody >
+                            <tr>
+                                <td>ID</td>
+                                <td><strong>{{order.id}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Address</td>
+                                <td><strong>{{order.address}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td> created at</td>
+                                <td><strong>{{order.created_at}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Start Time</td>
+                                <td><strong>{{order.start_time}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>End Time</td>
+                                <td><strong>{{order.end_time}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Lat</td>
+                                <td><strong>{{order.lat}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Lng</td>
+                                <td><strong>{{order.lng}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Note</td>
+                                <td><strong>{{order.note}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Original Price</td>
+                                <td><strong>{{order.original_price}}</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                        
+                </div>
+            </div>
+
+            <br>
+            <div class="col">
+                <div class="card-header">
+                    <div class="text"><h3 style="color : red">Customer</h3></div>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <div *ngIf="(order).customer.avatar" >
+                            <img style="width: 150px;" src="{{url+'/'+order.customer.avatar.url}}">
+                        </div>
+                        <div *ngIf="!order.customer.avatar">
+                            <img style="width: 150px;"src="../../../assets/img/avatar.jpg">
+                        </div>
+                        <table class="table table-striped ">
+                            <tbody>
+                                <tr>
+                                    <td>full_name</td>
+                                    <td> <strong>{{ order.customer.full_name }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    <td><strong>{{ order.customer.phone }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Birthday</td>
+                                    <strong *ngIf="order.customer.birthday">{{order.customer.birthday}}</strong>
+                                    <strong *ngIf="!order.customer.birthday">NULL</strong>
+                                </tr>
+                                <tr>
+                                    <td>Role ID</td>
+                                    <td><strong>{{order.customer.role_id}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>
+                                        <div *ngIf="order.customer.status==1" class="custom-control custom-switch">
+                                            <input type="checkbox" id="status" checked class="custom-control-input" >
+                                            <label  class="custom-control-label" for="status"></label>
+                                        </div>
+                                        <div *ngIf="!(order.customer.status==1)" class="custom-control custom-switch">
+                                            <input type="checkbox" id="status" checked class="custom-control-input" >
+                                            <label  class="custom-control-label" for="status"></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>                            
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="col">
+                <div class="card-header">
+                    <div class="text"><h3 style="color : blue">Service</h3></div>
+                </div>
+                <div class="card-body">
+                    <div *ngIf="order.service.image"><img src="{{url+ '/'+order.service.image.url}}" class="center" style="width: 100px"></div>
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td>ID</td>
+                                <td><strong>{{order.service.id}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Name</td>
+                                <td><strong>{{order.service.name}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td><strong>{{order.service.description}}</strong></td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+            
+            <br>
+            <div class="col" *ngIf="order.promotion_id">
+                <div class="card-header">
+                    <div class="text"><h3 style="color : blueviolet">Promotions</h3></div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td>ID</td>
+                                <td><strong>{{order.promotion.id}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Name</td>
+                                <td><strong>{{order.promotion.name}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>start date</td>
+                                <td><strong>{{order.promotion.start_date}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>end date</td>
+                                <td><strong>{{order.promotion.end_date}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Discount</td>
+                                <td><strong>{{order.promotion.discount}}</strong></td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>        
+            
+            <br>
+            <div class="col" *ngIf="order.doctor_id">
+                <div class="card-header">
+                    <div class="text"><h3 style="color : chartreuse">doctor</h3></div>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <div *ngIf="(order).doctor.avatar" >
+                            <img style="width: 150px;" src="{{url+'/'+order.doctor.avatar.url}}">
+                        </div>
+                        <div *ngIf="!order.doctor.avatar">
+                            <img style="width: 150px;"src="../../../assets/img/avatar.jpg">
+                        </div>
+                        <table class="table table-striped ">
+                            <tbody>
+                                <tr>
+                                    <td>full_name</td>
+                                    <td> <strong>{{ order.doctor.full_name }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    <td><strong>{{ order.doctor.phone }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Birthday</td>
+                                    <strong *ngIf="order.doctor.birthday">{{order.doctor.birthday}}</strong>
+                                    <strong *ngIf="!order.doctor.birthday">NULL</strong>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>
+                                        <div *ngIf="order.doctor.status==1" class="custom-control custom-switch">
+                                            <input type="checkbox" id="status" checked class="custom-control-input" >
+                                            <label  class="custom-control-label" for="status"></label>
+                                        </div>
+                                        <div *ngIf="!(order.doctor.status==1)" class="custom-control custom-switch">
+                                            <input type="checkbox" id="status" checked class="custom-control-input" >
+                                            <label  class="custom-control-label" for="status"></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>                            
+                    </div>
+                </div>
+            </div>
+            
+        </ng-template>
+        <ng-template #loading>
+            <div class="text-center">
+                <div class="spinner-grow" style="width: 15rem; height: 15rem;text-align: center;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+        </ng-template>
+    </div>
+</sb-card>

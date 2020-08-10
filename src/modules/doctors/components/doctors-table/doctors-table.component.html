@@ -1,0 +1,72 @@
+<div class="custom-control custom-switch">
+    <input (click)="ChangeStatus()" type="checkbox" class="custom-control-input" id="status" checked>
+    <label class="custom-control-label" for="status"></label>
+</div>
+<sb-card>
+    <div class="card-header">
+        <div class="test">
+            <label><fa-icon class="mr-1" [icon]='["fas","table"]'></fa-icon>List Add Doctors</label>
+            <div style="float: right;"><button  class="btn btn-dark btn-add"  routerLink="/doctors/approve" >Addrove new doctor</button></div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div *ngIf="doctors$ | async ; then display; else loading"></div>
+        <ng-template #display>
+            <table  class="table table-striped">
+                <thead>
+                    <th>Id</th>
+                    <th>phone</th>
+                    <th>Full Name</th>
+                    <th>Birthday</th>
+                    <th>Avatar</th>
+                    <th>Status </th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let doctor of doctors$ | async" routerLink="/doctors/detail/{{doctor.id}}">
+                        <th>{{ doctor.id }}</th>
+                        <th>{{ doctor.phone }}</th>
+                        <th>{{ doctor.full_name }}</th>
+                        <th>{{ doctor.birthday }}</th>
+                        <th>
+                            <div *ngIf="doctor.avatar"><img src="{{url+'/'+doctor.avatar.url}}" class="image-avatar-list" style="width:40px"></div>
+                            <div *ngIf="!doctor.avatar"><img src="../../../assets/img/avatar.jpg" class="image-avatar-list" style="width:40px"></div>
+                        </th>
+                        <th>
+                            <div *ngIf="doctor.status===1; then Status; else NoStatus"></div>
+                            <ng-template #Status>
+                                <div class="custom-control custom-switch">
+                                    <input checked type="checkbox" disabled id="status" class="custom-control-input" >
+                                    <label for="status" class="custom-control-label"></label>
+                                </div>
+                            </ng-template>
+                            <ng-template #NoStatus>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" id="no-status" class="custom-control-input" disabled >
+                                    <label for="no-status" class="custom-control-label"></label>
+                                </div>
+                            </ng-template>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                <div class="row" >
+                    <div class="col-sm-0">
+                        <button (click)="previousPage()">Previous</button>
+                    </div>
+                    <div><h3>{{page}}</h3></div>
+                    <div class="col-sm-0 text-right">
+                        <button (click)="nextPage()">Next</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #loading>
+            <div class="spinner">
+                <div class="ball-1"></div>
+                <div class="ball-2"></div>
+            </div>
+        </ng-template>    
+    </div>
+    
+</sb-card>

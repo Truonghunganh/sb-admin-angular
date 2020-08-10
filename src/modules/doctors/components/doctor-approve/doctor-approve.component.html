@@ -1,0 +1,36 @@
+<sb-card>
+    <div class="card-header">
+        <div class="test">
+            <fa-icon class="mr-1" [icon]='["fas","table"]'></fa-icon><strong>List all Doctors Approve</strong>
+        </div>
+    </div>
+    <div class="card-body">
+        <div *ngIf="listNewApproveDoctors$ | async ; then display ; else loading"></div>
+        <ng-template #display>
+            <table class="table table-striped">
+                    <tbody>
+                        <tr *ngFor = "let doctor of listNewApproveDoctors$ | async" routerLink="/doctors/detail/{{doctor.id}}">
+                            <ol>
+                                <li>Full Name : <strong>{{ doctor.full_name}}</strong></li>
+                                <li>birthday : <strong>{{ doctor.birthday}}</strong></li>
+                                <li>Phone : <strong>{{ doctor.phone}}</strong></li>
+                                <li>address : <fa-icon class="mr-1" [icon]='["fas","map-marker-alt"]'></fa-icon> <strong>{{ doctor.doctor_info.address}}</strong></li>
+                            </ol>
+                            <div>
+                                <button class="btn btn-info m-lg-3" (click)="agree(doctor.id)">Agree</button>
+                                <!-- <button class="btn btn-danger">Reject</button> -->
+                            </div>
+                            <br>                    
+                        </tr>
+                    </tbody>
+            </table>
+           </ng-template>
+        <ng-template #loading>
+            <div class="text-center">
+                <div class="spinner-grow" style="width: 15rem; height: 15rem;text-align: center;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</sb-card>

@@ -1,0 +1,49 @@
+<sb-card>
+    <div class="card-header">
+        <div class="test">
+            <fa-icon class="mr-1" [icon]='["fas","table"]'></fa-icon><strong>List all promotions</strong>
+            <button class="btn btn-dark btn-add" style="float: right;" routerLink="/promotions/add">Add promotion</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div *ngIf="promotions$ | async ; then display ; else loading"></div>
+        <ng-template #display>
+            <table class="table table-striped">
+                <thead>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Start date</th>
+                    <th>End date</th>
+                    <th>Discount</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let promotion of promotions$ | async">
+                        <td>{{promotion.id}}</td>
+                        <td>{{promotion.name}}</td>
+                        <td>{{promotion.start_date}}</td>
+                        <td>{{promotion.end_date}}</td>
+                        <td>{{promotion.discount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                <div class="row" >
+                    <div class="col-sm-0">
+                        <button (click)="previousPage()">Previous</button>
+                    </div>
+                    <div><h3>{{page}}</h3></div>
+                    <div class="col-sm-0 text-right">
+                        <button (click)="nextPage()">Next</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #loading>
+            <div class="text-center">
+                <div class="spinner-grow" style="width: 15rem; height: 15rem;text-align: center;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</sb-card>

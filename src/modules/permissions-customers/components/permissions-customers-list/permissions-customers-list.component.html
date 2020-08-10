@@ -1,0 +1,62 @@
+<sb-card>
+    <div class="card-header">
+        <div class="test">
+            <fa-icon class="mr-1" [icon]='["fas","table"]'></fa-icon><strong>List All Customers</strong>
+            <button class="btn btn-success btn-add"  routerLink="/permission-customer/remove-all" style="float: right">Remove All permissions Customers</button>
+            <button class="btn btn-primary btn-add"  routerLink="/permission-customer/add-all"style="float: right;">Add All permissions Customers</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div *ngIf="listCustomers$ | async; then display; else loading"></div>
+        <ng-template #display>
+            <table class="table table-striped">
+                <thead>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Phone</th>
+                    <th>Birthday</th>
+                    <th>Avatar</th>
+                    <th>Add permissions</th>
+                    <th>Remove permissions</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let customer of listCustomers$ | async">
+                        <td>{{customer.id}}</td>
+                        <td>{{customer.full_name}}</td>
+                        <td>{{customer.phone}}</td>
+                        <td>{{customer.birthday}}</td>
+                        <td>
+                            <div *ngIf="customer.avatar"><img src="{{url+'/'+customer.avatar.url}}" style="width:40px"></div>
+                            <div *ngIf="!customer.avatar"><img src="../../../assets/img/avatar.jpg"  style="width:40px"></div>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" style="margin : 5px" routerLink="/permission-customer/add-detail/{{customer.id}}">Add Detail Permissions</button>             
+                        </td>
+                        <td>
+                            <button class="btn btn-success" style="margin : 5px" routerLink="/permission-customer/remove-detail/{{customer.id}}">Remove Detail Permissions</button>             
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+               <div class="d-flex justify-content-center">
+                <div class="row" >
+                    <div class="col-sm-0">
+                        <button (click)="previousPage()">Previous</button>
+                    </div>
+                    <div><h3>{{page}}</h3></div>
+                    <div class="col-sm-0 text-right">
+                        <button (click)="nextPage()">Next</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #loading>
+            <div class="text-center">
+                <div class="spinner-grow" style="width: 15rem; height: 15rem;text-align: center;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            
+        </ng-template>
+    </div>
+</sb-card>

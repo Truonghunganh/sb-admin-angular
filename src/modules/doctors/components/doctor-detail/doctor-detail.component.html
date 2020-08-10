@@ -1,0 +1,133 @@
+<sb-card>
+    <div class="card-body">
+        <div *ngIf="doctorDetail$ | async ; then display ; else loading"></div>
+        <ng-template #display>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card shadow-sm">
+                        <div class="text-center">
+                            <br>
+                            <div *ngIf="(doctorDetail).avatar" >
+                                <img style="width: 150px;" src="{{url+'/'+doctorDetail.avatar.url}}">
+                            </div>
+                            <div *ngIf="doctorDetail$.avatar">
+                                <img class="profile_img" src="../../../assets/img/avatar.jpg">
+                            </div>
+                            <br>
+                            <table class="table table-striped ">
+                                <tbody>
+                                    <tr>
+                                        <td>full_name</td>
+                                        <td> <strong>{{ doctorDetail.full_name }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone</td>
+                                        <td><strong>{{ doctorDetail.phone}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Birthday</td>
+                                        <td><strong>{{ doctorDetail.birthday }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Role</td>
+                                        <td><strong>{{ doctorDetail.role.name}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status</td>
+                                        <td>
+                                            <div *ngIf="doctorDetail.status==1" class="custom-control custom-switch">
+                                                <input type="checkbox" id="status" checked class="custom-control-input" >
+                                                <label  class="custom-control-label" for="status"></label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    
+                    <table class="table table-striped ">
+                        <thead>
+                            <th><a href="#a" role="tab" data-toggle="tab" (click)="selection(0)" >Doctor info</a></th>
+                            <th><a href="#b" role="tab" data-toggle="tab" (click)="selection(1)">Certifications</a></th>
+                            <th><a href="#c" role="tab" data-toggle="tab" (click)="selection(2)">Categories</a></th>
+                            
+                        </thead>
+                    </table>
+                    <table class="table table-striped" id="a" role="tabpanel"  [hidden]="!select[0]">
+                        <tbody >
+                            <tr>
+                                <td>Latitude</td>
+                                <td><strong>{{doctorDetail.doctor_info.lat}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Longitude</td>
+                                <td><strong>{{doctorDetail.doctor_info.lng}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Balance</td>
+                                <td><strong>{{doctorDetail.doctor_info.balance}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>address</td>
+                                <td><strong>{{doctorDetail.doctor_info.address}}</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-striped" id="b" role="tabpanel"  [hidden]="!select[1]">
+                        <thead>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Expire at</th>
+                            <th>Image</th>
+                        </thead>
+                        <tbody >
+                            <tr *ngFor="let certification of doctorDetail.doctor_info.certifications">
+                                <td>{{certification.id}}</td>
+                                <td>{{certification.title}}</td>
+                                <td>{{certification.description}}</td>
+                                <td>{{certification.expire_at}}</td>
+                                <td>
+                                    <tr *ngFor="let file of certification.files">
+                                        <img style="width: 75px;" src="{{url+'/'+file.url}}" >
+                                    </tr>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <table class="table table-striped" role="tabpanel"  id="c"  [hidden]="!select[2]">
+                        <thead>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                        </thead>
+                        <tbody >
+                            <tr *ngFor="let category of doctorDetail.categories">
+                                <td>{{category.id}}</td>
+                                <td>{{category.name}}</td>
+                                <td>{{category.description}}</td>
+                                <td>
+                                    <img style="width: 75px;" src="{{url+'/'+ category.image.url}}">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #loading>
+            <div class="text-center">
+                <div class="spinner-grow" style="width: 15rem; height: 15rem;text-align: center;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</sb-card>

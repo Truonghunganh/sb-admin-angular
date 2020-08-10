@@ -1,0 +1,44 @@
+<sb-card>
+    <div class="card-header">
+        <div class="test">
+            <fa-icon class="mr-1" [icon]='["fas","table"]'></fa-icon><strong>List all Categories</strong>
+            <button class="btn btn-dark btn-add"  routerLink="/categories/add"style="float: right;">Add New Category</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div *ngIf="categories$ | async; then display; else loading"></div>
+        <ng-template #display>
+            <table class="table table-striped">
+                <thead>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let category of categories$ | async"  routerLink="/services/list/{{ category.id }}">
+                        <td>{{category.id}}</td>
+                        <td>{{category.name}}</td>
+                        <td>{{category.description}}</td>
+                        <td *ngIf="category.image"><img style="width: 150px" src="{{url+'/'+category.image.url}}"></td>
+                        <td *ngIf="!category.image"><img src="../../../assets/img/avatar.jpg"></td>
+                        <td>
+                            <fa-icon routerLink="/categories/edit/{{category.id}}"  [icon]='["fas", "edit"]'></fa-icon>
+                            <fa-icon (click)="deleteCategory(category.id)"  [icon]='["fas", "trash"]' ></fa-icon>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-template>
+        <ng-template #loading>
+            <div class="text-center">
+                <div class="spinner-grow" style="width: 15rem; height: 15rem;text-align: center;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            
+        </ng-template>
+    </div>
+</sb-card>
+<!-- transform="shrink-40" -->
